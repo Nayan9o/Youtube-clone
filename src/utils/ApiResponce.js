@@ -10,3 +10,5 @@ class ApiResponce{
 
   }
 }
+
+export {ApiResponce}

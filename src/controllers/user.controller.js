@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
 import { uploadOnCloudnary } from "../utils/cloudnary.js";
+import { ApiResponce } from "../utils/ApiResponce.js"
 
 const registerUser = asyncHandler(async (req, res) => {
   //get data form frontend
@@ -58,7 +59,11 @@ const registerUser = asyncHandler(async (req, res) => {
   if(!createdUser){
     throw new ApiError(500,"Something went wrong while creating the user")
   }
-
+   
+  //return responce
+  return res.status(201).json(
+    new ApiResponce(200,createdUser,"User Register Successfully")
+  )
 
 });
 
