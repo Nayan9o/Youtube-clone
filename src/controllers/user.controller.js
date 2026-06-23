@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudnary } from "../utils/cloudnary.js";
 import { ApiResponce } from "../utils/ApiResponce.js"
 
+
 const registerUser = asyncHandler(async (req, res) => {
   //get data form frontend
   const { fullName, username, email, password } = req.body;
@@ -16,7 +17,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   //if alredy exist
-  const userExist = User.findOne({
+  const userExist =  await User.findOne({
     $or: [{ email }, { username }],
   });
 
@@ -25,7 +26,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   //check image or avatar
-  const avatarLocalPath = req.files?.avtar[0]?.path;
+  const avatarLocalPath = req.files?.avatar[0]?.path;
   const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
   if (!avatarLocalPath) {
