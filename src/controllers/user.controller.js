@@ -40,7 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // create
-  User.create({
+  const user = await User.create({
     fullName,
     avatar: avatar.url,
     coverImage: coverImage?.url || "",
@@ -49,7 +49,17 @@ const registerUser = asyncHandler(async (req, res) => {
     username: username.toLowerCase(),
   });
 
-  
+
+  //remove passwoed
+  const createdUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  )
+
+  if(!createdUser){
+    throw new ApiError(500,"Something went wrong while creating the user")
+  }
+
+
 });
 
 export { registerUser };
